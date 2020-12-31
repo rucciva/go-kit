@@ -6,6 +6,10 @@ import (
 	"github.com/rucciva/go-kit/log"
 )
 
+func init() {
+	log.Register(NewLogger())
+}
+
 // ChangeT change underlying `*testing.T` of `tWritter` if it's being used
 // not thread safe
 func ChangeT(l log.Logger, t *testing.T) (restorer func()) {
