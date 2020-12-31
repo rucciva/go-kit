@@ -19,8 +19,10 @@ func tInvokeLog(l log.Logger, preline string) {
 
 	fmt.Println(preline)
 	fmt.Println()
+	l.Info("info")
+	l.Infof("info_%s", "one")
 	l.WithFields("data", data, "error", err, "error1", err1, "error2", err2).Error("error")
-	l.WithFields("data", data, "error", err, "error1", err1, "error2", err2).Errorf("error %d", 1)
+	l.WithFields("data", data, "error", err, "error1", err1, "error2", err2).Errorf("error_%s", "one")
 	fmt.Print("\n\n\n")
 }
 
