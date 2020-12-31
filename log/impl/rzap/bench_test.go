@@ -18,30 +18,29 @@ func BenchmarkLogger(b *testing.B) {
 			"1": 1,
 			"2": 2,
 		},
+		"map2": map[string]interface{}{
+			"1": 1,
+			"2": 2,
+		},
+		"map3": map[string]interface{}{
+			"1": 1,
+			"2": 2,
+		},
 	}
 	err := errors.New("error")
 
 	rzap := NewLogger(WithIODiscard())
 	zapl := rzap.Zap()
 	zaplsu := zapl.Sugar()
-	zaplsuwrap := func(msg string, args ...interface{}) {
-		zaplsu.Infow(msg, args...)
-	}
 
 	table := []struct {
 		scenario string
 		logging  func()
 	}{
 		{
-			scenario: "RZap",
+			scenario: "Zap",
 			logging: func() {
-				rzap.WithFields("object", object, "error", err).Info("bench")
-			},
-		},
-		{
-			scenario: "ZapSugarWrap",
-			logging: func() {
-				zaplsuwrap("bench", "object", object, "error", err)
+				zapl.Info("bench", zap.Any("object", object), zap.NamedError("error", err))
 			},
 		},
 		{
@@ -51,9 +50,15 @@ func BenchmarkLogger(b *testing.B) {
 			},
 		},
 		{
-			scenario: "Zap",
+			scenario: "RZap",
 			logging: func() {
-				zapl.Info("bench", zap.Any("object", object), zap.NamedError("error", err))
+				rzap.WithFields("object", object, "error", err).Info("bench")
+			},
+		},
+		{
+			scenario: "RZapf",
+			logging: func() {
+				rzap.WithFields("object", object, "error", err).Infof("bench %s %s", "with", "formating")
 			},
 		},
 	}

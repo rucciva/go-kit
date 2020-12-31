@@ -12,7 +12,7 @@ import (
 )
 
 func tInvokeLog(l log.Logger, preline string) {
-	err := errors.New("first error string (unformattable)")
+	err := errors.New("first error string")
 	err1 := xerrors.Errorf("second error string")
 	err2 := xerrors.Errorf("third error string")
 	data := map[string]interface{}{"data": map[string]interface{}{"test": true}}
@@ -20,9 +20,8 @@ func tInvokeLog(l log.Logger, preline string) {
 	fmt.Println(preline)
 	fmt.Println()
 	l.WithFields("data", data, "error", err, "error1", err1, "error2", err2).Error("error")
-	l.WithFields("data", data, "error", err, "error1", err1, "error2", err2).Error("error")
+	l.WithFields("data", data, "error", err, "error1", err1, "error2", err2).Errorf("error %d", 1)
 	fmt.Print("\n\n\n")
-
 }
 
 func TestLog(t *testing.T) {

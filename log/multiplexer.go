@@ -34,6 +34,36 @@ func (mbl mBaseLogger) Panic(msg string) {
 		bl.Panic(msg)
 	}
 }
+func (mbl mBaseLogger) Debugf(format string, args ...interface{}) {
+	for _, bl := range mbl.bl {
+		bl.Debugf(format, args...)
+	}
+}
+func (mbl mBaseLogger) Infof(format string, args ...interface{}) {
+	for _, bl := range mbl.bl {
+		bl.Infof(format, args...)
+	}
+}
+func (mbl mBaseLogger) Warnf(format string, args ...interface{}) {
+	for _, bl := range mbl.bl {
+		bl.Warnf(format, args...)
+	}
+}
+func (mbl mBaseLogger) Errorf(format string, args ...interface{}) {
+	for _, bl := range mbl.bl {
+		bl.Errorf(format, args...)
+	}
+}
+func (mbl mBaseLogger) Fatalf(format string, args ...interface{}) {
+	for _, bl := range mbl.bl {
+		bl.Fatalf(format, args...)
+	}
+}
+func (mbl mBaseLogger) Panicf(format string, args ...interface{}) {
+	for _, bl := range mbl.bl {
+		bl.Panicf(format, args...)
+	}
+}
 
 type mLogger struct {
 	mBaseLogger
