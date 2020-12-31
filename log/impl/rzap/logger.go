@@ -1,6 +1,8 @@
 package rzap
 
 import (
+	"fmt"
+
 	"github.com/rucciva/go-kit/log"
 
 	"go.uber.org/zap"
@@ -33,6 +35,38 @@ func (l baseLogger) Fatal(msg string) {
 }
 func (l baseLogger) Panic(msg string) {
 	l.zap.Panicw(msg, l.fields...)
+}
+
+func (l baseLogger) Debugf(format string, args ...interface{}) {
+	l.zap.Debugw(
+		fmt.Sprintf(format, args...),
+		l.fields...)
+}
+func (l baseLogger) Infof(format string, args ...interface{}) {
+	l.zap.Infow(
+		fmt.Sprintf(format, args...),
+		l.fields...)
+}
+
+func (l baseLogger) Warnf(format string, args ...interface{}) {
+	l.zap.Warnw(
+		fmt.Sprintf(format, args...),
+		l.fields...)
+}
+func (l baseLogger) Errorf(format string, args ...interface{}) {
+	l.zap.Errorw(
+		fmt.Sprintf(format, args...),
+		l.fields...)
+}
+func (l baseLogger) Fatalf(format string, args ...interface{}) {
+	l.zap.Fatalw(
+		fmt.Sprintf(format, args...),
+		l.fields...)
+}
+func (l baseLogger) Panicf(format string, args ...interface{}) {
+	l.zap.Panicw(
+		fmt.Sprintf(format, args...),
+		l.fields...)
 }
 
 type Logger struct {
